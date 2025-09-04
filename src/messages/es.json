@@ -1,0 +1,11 @@
+{
+  "greeting": "Panel de tu negocio",
+  "welcome": "Bienvenido a Negozia360",
+  "inventory": "Inventario",
+  "inventoryDescription": "Gestiona existencias, facturación y reportes en un solo lugar.",
+  "createProduct": "Crear producto",
+  "viewReports": "Ver reportes",
+  "salesToday": "Ventas del día",
+  "lowProducts": "Productos bajos",
+  "toRestock": "por reabastecer"
+}

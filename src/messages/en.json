@@ -1,0 +1,11 @@
+{
+  "greeting": "Your business panel",
+  "welcome": "Welcome to Negozia360",
+  "inventory": "Inventory",
+  "inventoryDescription": "Manage stock, billing and reports in one place.",
+  "createProduct": "Create product",
+  "viewReports": "View reports",
+  "salesToday": "Today's sales",
+  "lowProducts": "Low products",
+  "toRestock": "to restock"
+}

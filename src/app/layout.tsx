@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Providers from "./providers";
 import "./globals.css";
+import I18nProvider from "./i18nProvider";
+import esMessages from "../messages/es.json";
+import enMessages from "../messages/en.json";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,15 +23,24 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
+  // Detectar el idioma desde la ruta, por ejemplo /en o /es
+  let locale = "es";
+  if (typeof window !== "undefined") {
+    const pathLocale = window.location.pathname.split("/")[1];
+    if (["en", "es"].includes(pathLocale)) {
+      locale = pathLocale;
+    }
+  }
+  const messages = locale === "en" ? enMessages : esMessages;
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>{children}</Providers>
+        <I18nProvider locale={locale} messages={messages}>
+          <Providers>{children}</Providers>
+        </I18nProvider>
       </body>
     </html>
   );
