@@ -1,16 +1,45 @@
-import { NextIntlClientProvider } from "next-intl";
-import { ReactNode } from "react";
+"use client";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import esMessages from "../messages/es.json";
+import enMessages from "../messages/en.json";
+import { IntlProvider } from "next-intl";
 
-interface Props {
-  children: ReactNode;
-  locale: string;
-  messages: Record<string, string>;
+const LANG_KEY = "negozia360-lang";
+const messagesMap: Record<string, any> = { es: esMessages, en: enMessages };
+
+const LanguageContext = createContext({
+  locale: "es",
+  setLocale: (_lang: string) => {},
+});
+
+export function useLanguage() {
+  return useContext(LanguageContext);
 }
 
-export default function I18nProvider({ children, locale, messages }: Props) {
+export default function LanguageProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [locale, setLocale] = useState("es");
+
+  useEffect(() => {
+    const stored = localStorage.getItem(LANG_KEY);
+    if (stored && ["es", "en"].includes(stored)) {
+      setLocale(stored);
+    }
+  }, []);
+
+  const handleSetLocale = (lang: string) => {
+    setLocale(lang);
+    localStorage.setItem(LANG_KEY, lang);
+  };
+
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
-      {children}
-    </NextIntlClientProvider>
+    <LanguageContext.Provider value={{ locale, setLocale: handleSetLocale }}>
+      <IntlProvider locale={locale} messages={messagesMap[locale]}>
+        {children}
+      </IntlProvider>
+    </LanguageContext.Provider>
   );
 }
