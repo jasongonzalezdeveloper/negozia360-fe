@@ -5,7 +5,10 @@ import enMessages from "../messages/en.json";
 import { IntlProvider } from "next-intl";
 
 const LANG_KEY = "negozia360-lang";
-const messagesMap: Record<string, any> = { es: esMessages, en: enMessages };
+const messagesMap: Record<string, Record<string, string>> = {
+  es: esMessages,
+  en: enMessages,
+};
 
 const LanguageContext = createContext({
   locale: "es",
@@ -37,7 +40,11 @@ export default function LanguageProvider({
 
   return (
     <LanguageContext.Provider value={{ locale, setLocale: handleSetLocale }}>
-      <IntlProvider locale={locale} messages={messagesMap[locale]}>
+      <IntlProvider
+        locale={locale}
+        messages={messagesMap[locale]}
+        timeZone="America/Bogota"
+      >
         {children}
       </IntlProvider>
     </LanguageContext.Provider>

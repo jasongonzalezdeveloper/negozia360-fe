@@ -1,26 +1,45 @@
 @import "tailwindcss";
 
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #ededed;
+  --colorBackgroundNavbar: #1b1e25;
+  --colorBackgroundHeader: #282c35;
+  --colorBackgroundBody: #20262e;
+  --colorBackgroundNewSell: #30bdad;
+  --colorBackgroundNewSellHover: #269e8c;
+  --colorBackgroundNavActive: #adda75;
+  --colorBackgroundNavActiveHover: #8fc95a;
+  --colorBackgroundButton: #272e34;
+  --colorBackgroundButtonHover: #323843;
+  --colorText: #ffffff;
+  --colorTextAlt: #ffffff;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --colorBackground: var(--colorBackgroundBody);
+  --colorForeground: var(--colorText);
+  --fontSans: var(--font-geist-sans);
+  --fontMono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #1a1f23;
     --foreground: #ededed;
+    --color-navbar: #1b1e25;
+    --color-header: #282c35;
+    --color-body-bg: #1a1f23;
+    --color-new-sell: #30bdad;
+    --color-nav-option: #272e34;
+    --color-nav-active: #adda75;
+    --color-text: #ffffff;
+    --color-background-button-hover: #323843;
   }
-}
+} */
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--colorBackgroundBody);
+  color: var(--colorText);
   font-family: Arial, Helvetica, sans-serif;
 }
