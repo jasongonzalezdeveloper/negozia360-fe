@@ -12,12 +12,13 @@ export default function Navbar() {
 
   return (
     <nav
-      className="left-0 top-16 h-full w-64 border-r border-gray-200 p-4 flex flex-col z-10 transition-transform duration-300 md:translate-x-0"
+      className="fixed left-0 top-0 h-screen w-64 border-r border-gray-200 p-4 flex flex-col z-20 transition-transform duration-300 md:translate-x-0"
       style={{
         backgroundColor: "var(--colorBackgroundNavbar)",
         color: "var(--colorText)",
       }}
     >
+      <div>LOGO</div>
       <button
         onClick={handleNuevaVenta}
         className="mb-6 px-4 py-2 text-white rounded transition-colors bg-[var(--colorBackgroundNewSell)] hover:bg-[var(--colorBackgroundNewSellHover)]"

@@ -5,6 +5,7 @@ import LanguageProvider from "./i18nProvider";
 import "./globals.css";
 import Header from "@/components/header/header";
 import Navbar from "@/components/navbar/navbar";
+import Resumen from "@/components/features/venta/resumen/resumen";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,11 +37,16 @@ export default function RootLayout({
       >
         <LanguageProvider>
           <Providers>
-            <div className="flex flex-col h-screen">
-              <Header />
-              <div className="flex flex-1">
-                <Navbar />
-                <div className="flex-1">{children}</div>
+            <div className="flex h-screen">
+              <Navbar />
+              <div className="flex flex-col flex-1">
+                <Header />
+                <div className="flex flex-1">
+                  <div className="flex-1 overflow-y-auto ml-64">{children}</div>
+                  <aside className="fixed top-20 right-0 h-screen w-80 border-l z-30">
+                    <Resumen />
+                  </aside>
+                </div>
               </div>
             </div>
           </Providers>

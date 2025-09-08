@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <header
-      className="flex justify-between items-center px-6 py-4 border-b border-gray-200 z-50 bg-[var(--colorBackgroundHeader)]"
+      className="h-18 flex justify-between items-center px-6 py-3 border-b border-gray-200 z-40 bg-[var(--colorBackgroundHeader)] ml-64"
       style={{
         color: "var(--colorText)",
       }}
