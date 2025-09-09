@@ -7,9 +7,9 @@ const productos = [
   { id: 4, nombre: "Producto 4", imagen: "/public/vercel.svg", precio: 200 },
 ];
 
-export default function Resumen() {
+export default function SaleResume() {
   const [visible, setVisible] = useState(true);
-  const [showAside, setShowAside] = useState(true);
+  const [showAside, setShowAside] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const seleccionados = productos.slice(0, 3);

@@ -1,15 +1,13 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { Button, Card, CardContent, Typography } from "@mui/material";
-import Lista from "@/components/features/venta/lista/lista";
-import Resumen from "@/components/features/venta/resumen/resumen";
+// import { useTranslations } from "next-intl";
+import SaleList from "@/components/features/sale/saleList/saleList";
 
 export default function Home() {
-  const t = useTranslations();
+  // const t = useTranslations();
   return (
-    <div className="p-8">
-      <Lista />
+    <div className="p-8 h-full bg-[var(--colorBackgroundBody)]">
+      <SaleList />
     </div>
   );
 }
