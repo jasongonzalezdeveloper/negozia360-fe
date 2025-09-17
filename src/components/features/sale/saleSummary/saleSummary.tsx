@@ -3,30 +3,74 @@ import React, { useState, useRef } from "react";
 import { Product } from "@/components/interfaces/product";
 import Image from "next/image";
 
-const initialCart: Array<Product & { quantity: number; image?: string }> = [
+const ventasPendientes = [
   {
     id: "1",
-    name: "Producto 1",
-    price: 120,
-    iva: 19,
-    quantity: 2,
-    image: "/public/file.svg",
+    cliente: "Juan Pérez",
+    total: 320,
+    cantidad: 4,
+    cart: [
+      {
+        id: "1",
+        name: "Producto 1",
+        price: 120,
+        iva: 19,
+        quantity: 2,
+        image: "/public/file.svg",
+      },
+      {
+        id: "2",
+        name: "Producto 2",
+        price: 80,
+        iva: 19,
+        quantity: 2,
+        image: "/public/globe.svg",
+      },
+    ],
   },
   {
     id: "2",
-    name: "Producto 2",
-    price: 80,
-    iva: 19,
-    quantity: 1,
-    image: "/public/globe.svg",
+    cliente: "Ana Torres",
+    total: 150,
+    cantidad: 2,
+    cart: [
+      {
+        id: "3",
+        name: "Producto 3",
+        price: 150,
+        iva: 19,
+        quantity: 2,
+        image: "/public/next.svg",
+      },
+    ],
+  },
+  {
+    id: "3",
+    cliente: "Carlos Ruiz",
+    total: 80,
+    cantidad: 1,
+    cart: [
+      {
+        id: "4",
+        name: "Producto 4",
+        price: 80,
+        iva: 19,
+        quantity: 1,
+        image: "/public/window.svg",
+      },
+    ],
   },
 ];
 
 export default function SaleSummary() {
-  const [cart, setCart] = useState(initialCart);
+  const [activeVentaId, setActiveVentaId] = useState(ventasPendientes[0].id);
   const [visible, setVisible] = useState(true);
   const [showAside, setShowAside] = useState(true);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const activeVenta = ventasPendientes.find((v) => v.id === activeVentaId);
+  const cart = activeVenta?.cart || [];
+  const cliente = activeVenta?.cliente || "";
 
   // Eliminar producto
   const removeProduct = (id: string) => {
@@ -84,12 +128,16 @@ export default function SaleSummary() {
               Ocultar
             </button>
           </div>
+          {/* Mostrar nombre del cliente arriba del resumen */}
+          <div className="mb-2">
+            <span className="font-bold text-lg text-blue-700">{cliente}</span>
+          </div>
           <div className="flex-1 overflow-auto mb-4">
             <ul className="divide-y divide-gray-200">
               {cart.map((p) => (
                 <li key={p.id} className="flex items-center py-3 gap-3">
                   <Image
-                    src={"/images/default.jpg"}
+                    src={p.image || "/images/default.jpg"}
                     alt={p.name}
                     width={64}
                     height={64}
@@ -159,18 +207,37 @@ export default function SaleSummary() {
       )}
       {!showAside && (
         <div
-          className="fixed bottom-4 right-4 bg-white border border-gray-300 rounded-lg shadow-lg px-6 py-4 flex items-center gap-4 cursor-pointer z-50 transition-all duration-300 ease-in-out opacity-100"
-          onClick={handleShow}
+          className="fixed bottom-4 right-4 flex flex-row-reverse z-50 items-end"
+          style={{ gap: 0 }}
         >
-          <span className="font-bold text-xl text-green-700">
-            ${total.toFixed(2)}
-          </span>
-          <span className="text-base text-gray-700">
-            {cart.length} productos
-          </span>
-          <button className="ml-2 px-4 py-2 text-base rounded bg-gray-700 text-white hover:bg-gray-900 font-bold">
-            Mostrar
-          </button>
+          {ventasPendientes.map((venta, idx, arr) => (
+            <div
+              key={venta.id}
+              className="bg-white border border-gray-300 rounded-lg shadow-lg px-6 py-4 flex flex-col items-start gap-2 cursor-pointer min-w-[260px] max-w-[260px] transition-all duration-200 hover:scale-105"
+              style={{
+                position: "relative",
+                right: `${idx * 40}px`,
+                zIndex: arr.length - idx,
+                marginLeft: idx !== arr.length - 1 ? "-180px" : "0",
+              }}
+              onClick={() => {
+                setActiveVentaId(venta.id);
+                handleShow();
+              }}
+            >
+              <span className="font-bold text-xl text-blue-700 mb-2">
+                {venta.cliente}
+              </span>
+              <div className="flex items-center gap-4 w-full">
+                <span className="font-bold text-xl text-green-700">
+                  ${venta.total.toFixed(2)}
+                </span>
+                <span className="text-base text-gray-700">
+                  {venta.cantidad} productos
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </>

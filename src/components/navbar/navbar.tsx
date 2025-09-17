@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -12,7 +13,16 @@ export default function Navbar() {
 
   return (
     <nav className="fixed left-0 top-0 h-screen w-64 border-r bg-[var(--colorBackgroundNavbar)] text-[var(--colorText)] border-gray-200 p-4 flex flex-col z-20 transition-transform duration-300 md:translate-x-0">
-      <div>LOGO</div>
+      <div className="mb-6 flex justify-center items-center">
+        <Image
+          src="/images/logo.png"
+          alt="Logo"
+          width={80}
+          height={80}
+          className="h-20 w-auto"
+          priority
+        />
+      </div>
       <button
         onClick={handleNuevaVenta}
         className="mb-6 px-4 py-2 text-white rounded transition-colors bg-[var(--colorBackgroundNewSell)] hover:bg-[var(--colorBackgroundNewSellHover)]"

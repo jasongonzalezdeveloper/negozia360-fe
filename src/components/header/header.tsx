@@ -16,9 +16,7 @@ export default function Header() {
         color: "var(--colorText)",
       }}
     >
-      <div className="flex items-center">
-        <div className="font-bold text-xl">Logo</div>
-      </div>
+      <div className="flex items-center"></div>
       <div className="flex items-center gap-4">
         <select
           value={locale}
