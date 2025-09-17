@@ -5,7 +5,7 @@ import LanguageProvider from "./i18nProvider";
 import "./globals.css";
 import Header from "@/components/header/header";
 import Navbar from "@/components/navbar/navbar";
-import SaleResume from "@/components/features/sale/saleResume/saleResume";
+import SaleSummary from "@/components/features/sale/saleSummary/saleSummary";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,8 +43,8 @@ export default function RootLayout({
                 <Header />
                 <div className="flex flex-1">
                   <div className="flex-1 overflow-y-auto ml-64">{children}</div>
-                  <aside className="fixed top-20 right-0 h-screen w-80 z-30">
-                    <SaleResume />
+                  <aside className="fixed top-20 right-4 h-screen w-[600px] z-30">
+                    <SaleSummary />
                   </aside>
                 </div>
               </div>

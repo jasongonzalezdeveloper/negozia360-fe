@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Product } from "@/components/interfaces/product";
 import productsMock from "@/mocks/productMocks";
+import SaleModal from "./saleModal";
 
 export default function SaleList() {
   const [search, setSearch] = useState("");
@@ -10,21 +11,9 @@ export default function SaleList() {
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(
     null
   );
+  const [modalProduct, setModalProduct] = useState<Product | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const favorites = productsMock.filter((p) => p.favorite);
-  const filteredProducts = productsMock.filter((p) =>
-    p.name.toLowerCase().includes(search.toLowerCase())
-  );
-
-  // Ordenar y clasificar productos
-  const categorias = productsMock.filter((p) => !p.idFather);
-  const subcategorias = productsMock.filter(
-    (p) => p.idFather && (!p.price || p.price === 0)
-  );
-  const productos = productsMock.filter(
-    (p) => p.idFather && p.price && p.price > 0
-  );
-  // Concatenar en orden: categorías, subcategorías, productos
-  const listaOrdenada = [...categorias, ...subcategorias, ...productos];
 
   // Helpers para filtrar hijos
   const getSubcategories = (fatherId: string) =>
@@ -35,6 +24,7 @@ export default function SaleList() {
     productsMock.filter(
       (p) => p.idFather === fatherId && p.price && p.price > 0
     );
+
   // Renderizado dinámico
   let itemsToShow: Product[] = [];
   if (!selectedCategory && !selectedSubcategory) {
@@ -137,13 +127,25 @@ export default function SaleList() {
             return (
               <div
                 key={product.id}
-                className="rounded-lg shadow flex flex-col h-56 transition-colors p-0 cursor-pointer bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)]"
+                className="rounded-lg shadow flex flex-col h-56 transition-colors p-0 cursor-pointer"
+                style={{ background: "var(--colorBackgroundButton)" }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background =
+                    "var(--colorBackgroundButtonHover)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background =
+                    "var(--colorBackgroundButton)")
+                }
                 onClick={() => {
                   if (esCategoria) {
                     setSelectedCategory(product.id);
                     setSelectedSubcategory(null);
                   } else if (esSubcategoria) {
                     setSelectedSubcategory(product.id);
+                  } else {
+                    setModalProduct(product);
+                    setModalOpen(true);
                   }
                 }}
               >
@@ -196,6 +198,11 @@ export default function SaleList() {
           })}
         </div>
       </div>
+      <SaleModal
+        product={modalProduct as Product}
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   );
 }
