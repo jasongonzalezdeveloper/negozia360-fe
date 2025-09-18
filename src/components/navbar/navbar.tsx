@@ -25,24 +25,24 @@ export default function Navbar() {
       </div>
       <button
         onClick={handleNuevaVenta}
-        className="mb-6 px-4 py-2 text-white rounded transition-colors bg-[var(--colorBackgroundNewSell)] hover:bg-[var(--colorBackgroundNewSellHover)]"
+        className="mb-6 px-4 py-2 rounded transition-colors bg-[var(--colorBackgroundNewSell)] hover:bg-[var(--colorBackgroundNewSellHover)]"
       >
         Nueva venta
       </button>
       <div className="flex flex-col gap-2">
-        <button className="text-left px-4 py-2 rounded transition-colors bg-[var(--colorBackgroundNavActive)] hover:bg-[var(--colorBackgroundNavActiveHover)]">
+        <button className="text-left px-4 py-2 rounded transition-colors bg-[var(--colorBackgroundNavActive)] hover:bg-[var(--colorBackgroundNavActiveHover)] text-[var(--colorText)]">
           Inventario
         </button>
-        <button className="text-left px-4 py-2 rounded transition-colors bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)]">
+        <button className="text-left px-4 py-2 rounded transition-colors bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)] text-[var(--colorTextAlt)]">
           Clientes
         </button>
-        <button className="text-left px-4 py-2 rounded transition-colors bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)]">
+        <button className="text-left px-4 py-2 rounded transition-colors bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)] text-[var(--colorTextAlt)]">
           Proveedores
         </button>
-        <button className="text-left px-4 py-2 rounded transition-colors bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)]">
+        <button className="text-left px-4 py-2 rounded transition-colors bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)] text-[var(--colorTextAlt)]">
           Reportes
         </button>
-        <button className="text-left px-4 py-2 rounded transition-colors bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)]">
+        <button className="text-left px-4 py-2 rounded transition-colors bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)] text-[var(--colorTextAlt)]">
           Configuración
         </button>
       </div>

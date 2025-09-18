@@ -108,10 +108,57 @@ export default function SaleSummary() {
 
   return (
     <>
+      {!showAside && (
+        <div className="fixed bottom-4 right-4 z-50">
+          <button
+            className="bg-white border border-gray-300 rounded-lg shadow-lg px-8 py-6 flex flex-col items-center justify-center cursor-pointer min-w-[180px] max-w-[220px] transition-all duration-200 hover:scale-105"
+            onClick={() => setShowAside(true)}
+          >
+            <span className="font-bold text-xl text-blue-700 mb-2">
+              {ventasPendientes.length} ventas pendientes
+            </span>
+            <span className="text-base text-gray-700">
+              Haz clic para ver detalles
+            </span>
+          </button>
+        </div>
+      )}
       {showAside && (
+        <div className="fixed bottom-4 right-4 flex flex-row-reverse z-50 items-end bg-transparent">
+          {ventasPendientes.map((venta, idx, arr) => (
+            <div
+              key={venta.id}
+              className="bg-white border border-gray-300 rounded-lg shadow-lg px-6 py-4 flex flex-col items-start gap-2 cursor-pointer min-w-[220px] max-w-[220px] transition-all duration-200 hover:scale-105"
+              style={{
+                position: "relative",
+                right: `${idx * 40}px`,
+                zIndex: arr.length - idx,
+                marginLeft: idx !== arr.length - 1 ? "-180px" : "0",
+              }}
+              onClick={() => {
+                setActiveVentaId(venta.id);
+              }}
+            >
+              <span className="font-bold text-xl text-blue-700 mb-2">
+                {venta.cliente}
+              </span>
+              <div className="flex items-center gap-4 w-full">
+                <span className="font-bold text-xl text-green-700">
+                  ${venta.total.toFixed(2)}
+                </span>
+                <span className="text-base text-gray-700">
+                  {venta.cantidad} productos
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      {/* Resumen de venta individual */}
+      {showAside && activeVentaId && (
         <aside
           className={
-            "fixed bottom-4 right-4 w-[450px] max-w-[90vw] bg-white rounded-2xl shadow-2xl p-6 flex flex-col z-50 transition-all duration-300 ease-in-out text-gray-900 " +
+            "fixed bottom-4 right-[260px] w-[450px] max-w-[90vw] bg-white rounded-2xl shadow-2xl p-6 flex flex-col z-50 transition-all duration-300 ease-in-out text-gray-900 " +
             (visible
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-20 pointer-events-none")
@@ -123,18 +170,19 @@ export default function SaleSummary() {
             </h2>
             <button
               className="px-4 py-2 text-base rounded bg-gray-700 text-white hover:bg-gray-900 font-bold"
-              onClick={handleHide}
+              onClick={() => setActiveVentaId(null)}
             >
-              Ocultar
+              Cerrar
             </button>
           </div>
-          {/* Mostrar nombre del cliente arriba del resumen */}
           <div className="mb-2">
-            <span className="font-bold text-lg text-blue-700">{cliente}</span>
+            <span className="font-bold text-lg text-blue-700">
+              {activeVenta?.cliente}
+            </span>
           </div>
           <div className="flex-1 overflow-auto mb-4">
             <ul className="divide-y divide-gray-200">
-              {cart.map((p) => (
+              {activeVenta?.cart.map((p) => (
                 <li key={p.id} className="flex items-center py-3 gap-3">
                   <Image
                     src={p.image || "/images/default.jpg"}
@@ -152,7 +200,7 @@ export default function SaleSummary() {
                   <div className="flex items-center gap-2">
                     <button
                       className="px-3 py-2 bg-gray-200 rounded-lg text-lg font-bold"
-                      onClick={() => changeQuantity(p.id, -1)}
+                      onClick={() => {}}
                     >
                       -
                     </button>
@@ -161,7 +209,7 @@ export default function SaleSummary() {
                     </span>
                     <button
                       className="px-3 py-2 bg-gray-200 rounded-lg text-lg font-bold"
-                      onClick={() => changeQuantity(p.id, 1)}
+                      onClick={() => {}}
                     >
                       +
                     </button>
@@ -171,7 +219,7 @@ export default function SaleSummary() {
                   </div>
                   <button
                     className="ml-2 text-red-500 hover:text-red-700 text-3xl px-2"
-                    onClick={() => removeProduct(p.id)}
+                    onClick={() => {}}
                   >
                     ×
                   </button>
@@ -182,16 +230,41 @@ export default function SaleSummary() {
           <div className="bg-gray-50 rounded-xl p-4 mb-4">
             <div className="flex justify-between items-center mb-1">
               <span className="text-gray-600">Subtotal</span>
-              <span className="font-bold text-lg">${subtotal.toFixed(2)}</span>
+              <span className="font-bold text-lg">
+                $
+                {activeVenta?.cart
+                  .reduce((acc, p) => acc + (p.price || 0) * p.quantity, 0)
+                  .toFixed(2)}
+              </span>
             </div>
             <div className="flex justify-between items-center mb-1">
               <span className="text-gray-600">IVA</span>
-              <span className="font-bold text-lg">${iva.toFixed(2)}</span>
+              <span className="font-bold text-lg">
+                $
+                {activeVenta?.cart
+                  .reduce(
+                    (acc, p) =>
+                      acc + ((p.price || 0) * p.quantity * (p.iva || 0)) / 100,
+                    0
+                  )
+                  .toFixed(2)}
+              </span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-800 font-bold text-xl">Total</span>
               <span className="font-bold text-2xl text-green-600">
-                ${total.toFixed(2)}
+                $
+                {(
+                  activeVenta?.cart.reduce(
+                    (acc, p) => acc + (p.price || 0) * p.quantity,
+                    0
+                  ) +
+                  activeVenta?.cart.reduce(
+                    (acc, p) =>
+                      acc + ((p.price || 0) * p.quantity * (p.iva || 0)) / 100,
+                    0
+                  )
+                ).toFixed(2)}
               </span>
             </div>
           </div>
@@ -204,41 +277,6 @@ export default function SaleSummary() {
             Facturar
           </button>
         </aside>
-      )}
-      {!showAside && (
-        <div
-          className="fixed bottom-4 right-4 flex flex-row-reverse z-50 items-end"
-          style={{ gap: 0 }}
-        >
-          {ventasPendientes.map((venta, idx, arr) => (
-            <div
-              key={venta.id}
-              className="bg-white border border-gray-300 rounded-lg shadow-lg px-6 py-4 flex flex-col items-start gap-2 cursor-pointer min-w-[260px] max-w-[260px] transition-all duration-200 hover:scale-105"
-              style={{
-                position: "relative",
-                right: `${idx * 40}px`,
-                zIndex: arr.length - idx,
-                marginLeft: idx !== arr.length - 1 ? "-180px" : "0",
-              }}
-              onClick={() => {
-                setActiveVentaId(venta.id);
-                handleShow();
-              }}
-            >
-              <span className="font-bold text-xl text-blue-700 mb-2">
-                {venta.cliente}
-              </span>
-              <div className="flex items-center gap-4 w-full">
-                <span className="font-bold text-xl text-green-700">
-                  ${venta.total.toFixed(2)}
-                </span>
-                <span className="text-base text-gray-700">
-                  {venta.cantidad} productos
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
       )}
     </>
   );

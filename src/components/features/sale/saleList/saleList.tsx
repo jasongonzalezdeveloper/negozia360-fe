@@ -54,7 +54,7 @@ export default function SaleList() {
             {favorites.map((product) => (
               <div
                 key={product.id}
-                className="rounded-lg shadow flex flex-col min-w-[180px] h-56 transition-colors p-0 bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)]"
+                className="rounded-lg shadow flex flex-col min-w-[180px] h-56 transition-colors p-0 bg-[var(--colorBackgroundButton)] text-[var(--colorTextAlt)] hover:scale-95 cursor-pointer"
               >
                 <div
                   className="flex-[7] w-full h-0"
@@ -83,33 +83,40 @@ export default function SaleList() {
       </div>
       {/* Buscador y lista normal */}
       <div className="flex-1 overflow-auto">
-        <div>
-          {(selectedCategory || selectedSubcategory) && (
+        <h3 className="font-semibold mb-2">Todos los productos</h3>
+        {/* Breadcrumb de navegación */}
+        {(selectedCategory || selectedSubcategory) && (
+          <div className="mb-4 flex gap-2 flex-wrap items-center text-sm">
             <button
-              className="mb-4 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
+              className="px-3 py-1 rounded  text-gray-800 font-semibold cursor-pointer hover:underline"
               onClick={() => {
-                if (selectedSubcategory) {
-                  // Buscar el padre de la subcategoría
-                  const padre = productsMock.find(
-                    (p) => p.id === selectedSubcategory
-                  )?.idFather;
-                  if (padre) {
-                    setSelectedSubcategory(null);
-                  } else {
-                    setSelectedSubcategory(null);
-                    setSelectedCategory(null);
-                  }
-                } else if (selectedCategory) {
-                  setSelectedCategory(null);
-                  setSelectedSubcategory(null);
-                }
+                setSelectedCategory(null);
+                setSelectedSubcategory(null);
               }}
             >
-              Regresar
+              Home
             </button>
-          )}
-        </div>
-        <h3 className="font-semibold mb-2">Todos los productos</h3>
+            {selectedCategory && <span className="mx-2">/</span>}
+            {selectedCategory && (
+              <button
+                className="px-3 py-1 rounded   text-gray-800 font-semibold cursor-pointer hover:underline"
+                onClick={() => {
+                  setSelectedSubcategory(null);
+                }}
+              >
+                {productsMock.find((p) => p.id === selectedCategory)?.name}
+              </button>
+            )}
+            {selectedSubcategory && (
+              <>
+                <span className="mx-2">/</span>
+                <span className="font-semibold text-gray-700">
+                  {productsMock.find((p) => p.id === selectedSubcategory)?.name}
+                </span>
+              </>
+            )}
+          </div>
+        )}
         <input
           type="text"
           name="search"
@@ -120,28 +127,27 @@ export default function SaleList() {
         />
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {itemsToShow.map((product) => {
-            const esCategoria = !product.idFather;
-            const esSubcategoria =
+            const isCategory = !product.idFather;
+            const isSubcategory =
               product.idFather && (!product.price || product.price === 0);
-            // const esProducto = product.idFather && product.price && product.price > 0;
+            const isProduct =
+              product.idFather && product.price && product.price > 0;
+            let fatherName = "";
+            if (isProduct) {
+              const father = productsMock.find(
+                (p) => p.id === product.idFather
+              );
+              fatherName = father?.name || "";
+            }
             return (
               <div
                 key={product.id}
-                className="rounded-lg shadow flex flex-col h-56 transition-colors p-0 cursor-pointer"
-                style={{ background: "var(--colorBackgroundButton)" }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.background =
-                    "var(--colorBackgroundButtonHover)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.background =
-                    "var(--colorBackgroundButton)")
-                }
+                className="rounded-lg shadow flex flex-col h-60 transition-all duration-200 p-0 cursor-pointer hover:scale-95"
                 onClick={() => {
-                  if (esCategoria) {
+                  if (isCategory) {
                     setSelectedCategory(product.id);
                     setSelectedSubcategory(null);
-                  } else if (esSubcategoria) {
+                  } else if (isSubcategory) {
                     setSelectedSubcategory(product.id);
                   } else {
                     setModalProduct(product);
@@ -149,10 +155,10 @@ export default function SaleList() {
                   }
                 }}
               >
-                {esCategoria || esSubcategoria ? (
+                {isCategory || isSubcategory ? (
                   <>
-                    <div className="flex-[3] w-full flex flex-col justify-center items-center py-2">
-                      <div className="font-semibold text-center">
+                    <div className="flex-[3] w-full flex flex-col justify-center items-center py-2 bg-[var(--colorBackgroundProductItem)]">
+                      <div className="font-semibold text-center text-[var(--colorTextAlt)] ">
                         {product.name}
                       </div>
                     </div>
@@ -170,9 +176,17 @@ export default function SaleList() {
                     </div>
                   </>
                 ) : (
+                  // Product
                   <>
+                    <div className="rounded-t-lg w-full text-center font-bold text-base py-5 text-[var(--colorTextAlt)] bg-[var(--colorBackgroundProductItem)] relative">
+                      {fatherName}
+                      {/* Etiqueta Oferta en la esquina superior derecha del div del nombre del padre */}
+                      <span className="absolute top-2 right-2 bg-[var(--colorPrimaryOrange)] text-[var(--colorTextAlt)] text-xs font-bold px-3 py-1 rounded shadow-lg">
+                        Oferta
+                      </span>
+                    </div>
                     <div
-                      className="flex-[7] w-full h-0"
+                      className="flex-[7] w-full h-0 relative"
                       style={{ aspectRatio: "1/1" }}
                     >
                       <Image
@@ -180,15 +194,15 @@ export default function SaleList() {
                         alt={product.name}
                         width={224}
                         height={224}
-                        className="object-cover w-full h-full rounded-t-lg"
+                        className="object-cover w-full h-full"
                       />
                     </div>
-                    <div className="flex-[3] w-full flex flex-col justify-center items-center py-2">
-                      <div className="font-semibold text-center">
-                        {product.name}
-                      </div>
-                      <div className="text-green-600 font-bold">
-                        ${product.price}
+                    <div className="flex-[3] w-full flex flex-col justify-center px-3 py-4 bg-[var(--colorBackgroundProductItemTextCard)] text-[var(--colorText)]">
+                      <div className="w-full flex flex-col justify-center py-2 relative">
+                        <div className="font-semibold">{product.name}</div>
+                        <div className="text-green-600 font-bold">
+                          ${product.price}
+                        </div>
                       </div>
                     </div>
                   </>

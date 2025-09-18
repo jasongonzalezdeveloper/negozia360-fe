@@ -3,17 +3,27 @@
 
 :root {
   --foreground: #ededed;
-  --colorBackgroundNavbar: #1b1e25;
-  --colorBackgroundHeader: #282c35;
-  --colorBackgroundBody: #20262e;
-  --colorBackgroundNewSell: #30bdad;
-  --colorBackgroundNewSellHover: #269e8c;
-  --colorBackgroundNavActive: #adda75;
-  --colorBackgroundNavActiveHover: #8fc95a;
-  --colorBackgroundButton: #272e34;
-  --colorBackgroundButtonHover: #323843;
-  --colorText: #ffffff;
-  --colorTextAlt: #ffffff;
+  --colorPrimaryOrange: #F09652;
+  --colorPrimaryGreen: #93C572;
+  --colorPrimaryDark: #48594C;
+  --colorPrimaryOrangeHover: #e07c2f;
+  --colorPrimaryGreenHover: #7bbf4a;
+  --colorPrimaryDarkHover: #324034;
+  --colorBackgroundNavbar: #1f2520;
+  --colorBackgroundHeader: #ececec;
+  --colorBackgroundBody: #e0e1e3;
+  --colorBackgroundNewSell: var(--colorPrimaryOrange);
+  --colorBackgroundNewSellHover: var(--colorPrimaryOrangeHover);
+  --colorBackgroundNavActive: var(--colorPrimaryGreen);
+  --colorBackgroundNavActiveHover: var(--colorPrimaryGreenHover);
+  --colorBackgroundButton: var(--colorPrimaryDark);
+  --colorBackgroundButtonHover: var(--colorPrimaryDarkHover);
+  --colorBackgroundProductItem: var(--colorPrimaryDark);
+  --colorBackgroundProductItemHover: #b5d38d;
+  --colorBackgroundProductItemTextCard: #f6f6f6;
+
+  --colorText: #000002;
+  --colorTextAlt: #e7e8ec;
 }
 
 @theme inline {
