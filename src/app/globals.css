@@ -12,6 +12,7 @@
   --colorBackgroundNavbar: #1f2520;
   --colorBackgroundHeader: #ececec;
   --colorBackgroundBody: #e0e1e3;
+
   --colorBackgroundNewSell: var(--colorPrimaryOrange);
   --colorBackgroundNewSellHover: var(--colorPrimaryOrangeHover);
   --colorBackgroundNavActive: var(--colorPrimaryGreen);
@@ -21,6 +22,11 @@
   --colorBackgroundProductItem: var(--colorPrimaryDark);
   --colorBackgroundProductItemHover: #b5d38d;
   --colorBackgroundProductItemTextCard: #f6f6f6;
+
+  --colorBackgroundSuccess: var(--colorPrimaryGreen);
+  --colorBackgroundSuccessHover: var(--colorPrimaryGreenHover);
+  --colorBackgroundWarning: #fff3cd;
+  --colorBackgroundError: #f8d7da;
 
   --colorText: #000002;
   --colorTextAlt: #e7e8ec;

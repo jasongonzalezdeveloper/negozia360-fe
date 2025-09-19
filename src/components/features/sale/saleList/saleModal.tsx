@@ -59,7 +59,7 @@ export default function SaleModal({
         {/* Controles de cantidad grandes */}
         <div className="flex items-center justify-center gap-6 mb-2 text-[var(--colorTextAlt)] ">
           <button
-            className="px-6 py-4 bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)] rounded-xl text-3xl font-bold"
+            className="px-6 py-4 bg-[var(--colorPrimaryOrange)] hover:bg-[var(--colorPrimaryOrangeHover)] rounded-xl text-3xl font-bold"
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
           >
             -
@@ -68,7 +68,7 @@ export default function SaleModal({
             {quantity}
           </span>
           <button
-            className="px-6 py-4 bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)] rounded-xl text-3xl font-bold"
+            className="px-6 py-4 bg-[var(--colorPrimaryOrange)] hover:bg-[var(--colorPrimaryOrangeHover)] rounded-xl text-3xl font-bold"
             onClick={() => setQuantity((q) => q + 1)}
           >
             +
@@ -76,7 +76,7 @@ export default function SaleModal({
         </div>
         {/* Botón Agregar grande */}
         <button
-          className="w-full py-4 mt-2 bg-green-600 hover:bg-green-700 text-[var(--colorTextAlt)] text-xl font-bold rounded-xl shadow-lg"
+          className="w-full py-4 mt-2 bg-[var(--colorBackgroundSuccess)] hover:bg-[var(--colorBackgroundSuccessHover)] text-[var(--colorText)] text-xl font-bold rounded-xl shadow-lg"
           onClick={() => {
             /* Aquí va la lógica para agregar al carrito */
           }}

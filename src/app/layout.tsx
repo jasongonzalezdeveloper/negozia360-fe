@@ -43,9 +43,9 @@ export default function RootLayout({
                 <Header />
                 <div className="flex flex-1">
                   <div className="flex-1 overflow-y-auto ml-64">{children}</div>
-                  {/* <aside className="fixed top-20 right-4 h-screen w-[600px] z-30">
+                  <div className="fixed top-20 right-4 h-screen z-30">
                     <SaleSummary />
-                  </aside> */}
+                  </div>
                 </div>
               </div>
             </div>
