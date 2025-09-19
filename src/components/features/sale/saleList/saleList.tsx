@@ -125,7 +125,7 @@ export default function SaleList() {
           placeholder="Buscar por nombre..."
           className="mb-4 px-3 py-2 border rounded w-full"
         />
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {itemsToShow.map((product) => {
             const isCategory = !product.idFather;
             const isSubcategory =
@@ -179,7 +179,9 @@ export default function SaleList() {
                   // Product
                   <>
                     <div className="rounded-t-lg w-full text-center font-bold text-base py-5 text-[var(--colorTextAlt)] bg-[var(--colorBackgroundProductItem)] relative">
-                      {fatherName}
+                      <span className="block w-full truncate px-2">
+                        {fatherName}
+                      </span>
                       {/* Etiqueta Oferta en la esquina superior derecha del div del nombre del padre */}
                       <span className="absolute top-2 right-2 bg-[var(--colorPrimaryOrange)] text-[var(--colorTextAlt)] text-xs font-bold px-3 py-1 rounded shadow-lg">
                         Oferta
@@ -199,7 +201,12 @@ export default function SaleList() {
                     </div>
                     <div className="flex-[3] w-full flex flex-col justify-center px-3 py-4 bg-[var(--colorBackgroundProductItemTextCard)] text-[var(--colorText)]">
                       <div className="w-full flex flex-col justify-center py-2 relative">
-                        <div className="font-semibold">{product.name}</div>
+                        <div
+                          className="font-semibold w-full truncate"
+                          title={product.name}
+                        >
+                          {product.name}
+                        </div>
                         <div className="text-green-600 font-bold">
                           ${product.price}
                         </div>

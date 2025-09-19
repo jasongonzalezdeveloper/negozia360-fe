@@ -29,62 +29,63 @@ export default function SaleModal({
       style={{ background: "rgba(0,0,0,0.75)" }}
       onClick={handleBackgroundClick}
     >
-      <div className="bg-[#454545] rounded-lg shadow-lg flex w-[600px] max-w-full p-10 relative flex-col">
+      <div className="bg-[var(--colorBackgroundNavbar)] rounded-2xl shadow-2xl flex flex-col w-full max-w-md mx-auto p-6 md:p-8 relative gap-6">
         {/* Botón cerrar arriba del todo */}
         <button
-          className="absolute top-2 right-4 mb-4 text-white hover:text-gray-400 text-5xl font-bold z-10"
+          className="absolute top-4 right-4 text-[var(--colorTextAlt)] hover:text-gray-400 text-4xl font-bold z-10"
           onClick={onClose}
           aria-label="Cerrar"
         >
           ×
         </button>
-        <div className="flex flex-row">
-          {/* Imagen a la izquierda */}
-          <div className="flex-shrink-0 w-56 h-56 flex items-center justify-center">
-            <Image
-              src={product.image || "/images/default.jpg"}
-              alt={product.name}
-              width={224}
-              height={224}
-              className="object-cover w-full h-full rounded"
-            />
-          </div>
-          {/* Info a la derecha */}
-          <div className="flex flex-col flex-1 pl-10 justify-center">
-            <div className="font-bold text-2xl mb-4">{product.name}</div>
-            <div className="text-green-600 font-bold mb-6 text-xl">
-              ${product.price}
-            </div>
-            <div className="flex items-center gap-4 mb-6 justify-center">
-              <button
-                className="px-6 py-4 bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)] rounded text-3xl font-bold"
-                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              >
-                -
-              </button>
-              <span className="font-semibold text-2xl w-16 text-center">
-                {quantity}
-              </span>
-              <button
-                className="px-6 py-4 bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)] rounded text-3xl font-bold"
-                onClick={() => setQuantity((q) => q + 1)}
-              >
-                +
-              </button>
-            </div>
-            <button
-              className="w-full py-4 mt-2 bg-green-600 hover:bg-green-700 text-white text-xl font-bold rounded"
-              onClick={() => {
-                /* Aquí va la lógica para agregar al carrito */
-              }}
-            >
-              Agregar
-            </button>
-          </div>
+        {/* Título grande centrado */}
+        <div className="text-[var(--colorTextAlt)] text-center font-bold text-2xl md:text-3xl mb-2">
+          {product.name}
         </div>
+        {/* Imagen centrada y grande */}
+        <div className="flex justify-center">
+          <Image
+            src={product.image || "/images/default.jpg"}
+            alt={product.name}
+            width={224}
+            height={224}
+            className="object-cover w-40 h-40 md:w-56 md:h-56 rounded-xl"
+          />
+        </div>
+        {/* Precio destacado */}
+        <div className="text-center text-green-600 font-bold text-2xl md:text-3xl mb-2">
+          ${product.price}
+        </div>
+        {/* Controles de cantidad grandes */}
+        <div className="flex items-center justify-center gap-6 mb-2 text-[var(--colorTextAlt)] ">
+          <button
+            className="px-6 py-4 bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)] rounded-xl text-3xl font-bold"
+            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+          >
+            -
+          </button>
+          <span className="font-semibold text-2xl w-16 text-center">
+            {quantity}
+          </span>
+          <button
+            className="px-6 py-4 bg-[var(--colorBackgroundButton)] hover:bg-[var(--colorBackgroundButtonHover)] rounded-xl text-3xl font-bold"
+            onClick={() => setQuantity((q) => q + 1)}
+          >
+            +
+          </button>
+        </div>
+        {/* Botón Agregar grande */}
+        <button
+          className="w-full py-4 mt-2 bg-green-600 hover:bg-green-700 text-[var(--colorTextAlt)] text-xl font-bold rounded-xl shadow-lg"
+          onClick={() => {
+            /* Aquí va la lógica para agregar al carrito */
+          }}
+        >
+          Agregar
+        </button>
         {/* Notas del producto debajo de todo */}
         {product.notes && (
-          <div className="w-full mt-8 px-2 text-white text-base">
+          <div className="w-full mt-6 px-2 text-[var(--colorTextAlt)] text-base text-center">
             <span className="font-semibold">Notas: </span>
             {product.notes}
           </div>
